@@ -2,3 +2,29 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+
+.m-r-15{
+  margin-right:15px;
+}
+
+.f-w-600{font-weight:600}
+.f-w-700{font-weight:700}
+.new-users-social{margin-bottom:30px}
+
+.media{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}
+
+.media .media-body{-webkit-box-flex:1;-ms-flex:1;flex:1}
+.timeline-content p{margin-top:30px;color:#999}
+
+.img-w50 {
+  width: 50px;
+}
+
+.timeline-content p{margin-top:30px;color:#999}
+.social-chat{margin-top:30px}
+.social-chat span span{font-weight:normal;color:#999;font-size:12px}
+.social-chat .media-body{padding:30px;border:1px solid #f4f4f4;position:relative}
+.social-chat .media-body p{margin-top:5px}
+.social-chat .media-body:before{content:'';position:absolute;top:19px;right:100%;border:7px solid transparent;border-right:7px solid #59667a}
+.social-chat .media-body:after{content:'';position:absolute;top:19px;right:100%;border:7px solid transparent;border-right:7px solid #fff}
+.other-msg{margin-bottom:30px}
