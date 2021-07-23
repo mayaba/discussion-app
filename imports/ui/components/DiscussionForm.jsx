@@ -1,12 +1,26 @@
-import React from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
+import React, { useState } from 'react';
 import { DiscussionCollection } from "/imports/api/discussion";
 import { Row, Col, Card, CardBody, Button, Media, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
 
 export const DiscussionForm = ({ discussion }) => {
+    const [reply, setReply] = useState("");
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const createdDate = discussion.createdAt;
+    
+    const handleSubmit = e => {
+        e.preventDefault();
+    
+        if (!reply) return;
+    
+        // insert a comment (update the discussion)
+        DiscussionCollection.update(
+          {_id: discussion._id},
+          {$push: {comments: reply.trim()}}
+        );
+    
+        setReply("");
+      };
 
     return (
         <Row>
@@ -34,13 +48,31 @@ export const DiscussionForm = ({ discussion }) => {
                                                 const createdAt = comment.createdAt;
                                                 return (
                                                     <Media>
-                                                        <Media className="img-50 img-fluid m-r-15 rounded-circle img-w50" alt="" src="images/1.jpg" />
+                                                        <Media className="img-fluid m-r-15 rounded-circle img-w50" alt="" src="images/1.jpg" />
                                                         <Media body><span className="f-w-600">{comment.name} <span>"{comment.username}" {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</span></span>
-                                                        <p>{comment.body}</p>
+                                                            <p>{comment.body}</p>
                                                         </Media>
                                                     </Media>
                                                 )
                                             })}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="comments-box">
+                                            <form onSubmit={handleSubmit}>
+                                                <Media>
+                                                    <Media className="img-w50 img-fluid m-r-15 rounded-circle" alt="" src="images/1.jpg" />
+                                                    <Media body>
+                                                        <InputGroup className="text-box">
+                                                            <Input className="form-control input-txt-bx mt-1" type="text" name="message-to-send" placeholder="Post Your comment" value={reply} onChange={(e) => setReply(e.target.value)} />
+                                                            <InputGroupAddon addonType="append">
+                                                                <Button outline color="secondary" type="submit" className="mt-1 ml-5">Submit</Button>
+                                                            </InputGroupAddon>
+                                                        </InputGroup>
+                                                    </Media>
+                                                </Media>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>

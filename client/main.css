@@ -28,3 +28,10 @@ body {
 .social-chat .media-body:before{content:'';position:absolute;top:19px;right:100%;border:7px solid transparent;border-right:7px solid #59667a}
 .social-chat .media-body:after{content:'';position:absolute;top:19px;right:100%;border:7px solid transparent;border-right:7px solid #fff}
 .other-msg{margin-bottom:30px}
+.text-box{position:relative}
+.input-txt-bx{border:none}
+.input-txt-bx::placeholder{color:#999}
+
+.ml-5 {
+  margin-left: 5px;
+}
