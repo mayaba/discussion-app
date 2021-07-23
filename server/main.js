@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { DiscussionCollection } from "/imports/api/discussion";
 
 
@@ -14,7 +15,7 @@ function insertLink(discussion_obj) {
 }
 
 
-Meteor.startup(() => {
+Meteor.startup(() => { 
   if (DiscussionCollection.find().count() === 0) {
     // creating a new discussion for testing
     const discussion_obj = {
@@ -24,6 +25,7 @@ Meteor.startup(() => {
       body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed urna in justo euismod condimentum. Fusce placerat enim et odio molestie sagittis.',
       comments: [
         {
+          id: new Mongo.ObjectID(),
           username: 'hemoo91',
           name: 'Jon Doe',
           createdAt: new Date(),

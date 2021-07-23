@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Mongo } from 'meteor/mongo';
 import { DiscussionCollection } from "/imports/api/discussion";
 import { Row, Col, Card, CardBody, Button, Media, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
@@ -7,20 +8,31 @@ export const DiscussionForm = ({ discussion }) => {
     const [reply, setReply] = useState("");
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const createdDate = discussion.createdAt;
-    
+
+
     const handleSubmit = e => {
         e.preventDefault();
-    
+
         if (!reply) return;
-    
+
+        const newcomment = {
+            id: new Mongo.ObjectID(),
+            username: discussion.username,
+            name: discussion.name,
+            createdAt: new Date(),
+            body: reply.trim()
+        };
+
         // insert a comment (update the discussion)
         DiscussionCollection.update(
-          {_id: discussion._id},
-          {$push: {comments: reply.trim()}}
+            { _id: discussion._id },
+            { $push: { comments: newcomment } }
         );
-    
+
+
+
         setReply("");
-      };
+    };
 
     return (
         <Row>
@@ -47,12 +59,14 @@ export const DiscussionForm = ({ discussion }) => {
                                             {discussion.comments.map(comment => {
                                                 const createdAt = comment.createdAt;
                                                 return (
-                                                    <Media>
-                                                        <Media className="img-fluid m-r-15 rounded-circle img-w50" alt="" src="images/1.jpg" />
-                                                        <Media body><span className="f-w-600">{comment.name} <span>"{comment.username}" {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</span></span>
-                                                            <p>{comment.body}</p>
+                                                    <div key={comment.id} className="pb-3">
+                                                        <Media>
+                                                            <Media className="img-fluid m-r-15 rounded-circle img-w50" alt="" src="images/1.jpg" />
+                                                            <Media body><span className="f-w-600">{comment.name} <span>"{comment.username}" {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</span></span>
+                                                                <p>{comment.body}</p>
+                                                            </Media>
                                                         </Media>
-                                                    </Media>
+                                                    </div>
                                                 )
                                             })}
                                         </div>

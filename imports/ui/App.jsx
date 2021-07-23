@@ -8,7 +8,7 @@ import { DiscussionCollection } from "/imports/api/discussion";
 export const App = () => {
   const discussions = [];
   const discussion = useTracker(() => DiscussionCollection.find({}).forEach(d => {
-    discussions.push(<DiscussionForm discussion={d} />)
+    discussions.push(<DiscussionForm key={d._id} discussion={d} />)
   }));
 
   if (discussions.length > 0) {
