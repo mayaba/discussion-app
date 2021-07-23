@@ -1,31 +1,37 @@
 import { Meteor } from 'meteor/meteor';
-import { LinksCollection } from '/imports/api/links';
+import { DiscussionCollection } from "/imports/api/discussion";
 
-function insertLink({ title, url }) {
-  LinksCollection.insert({title, url, createdAt: new Date()});
+
+function insertLink(discussion_obj) {
+  DiscussionCollection.insert({
+    username: discussion_obj.username,
+    name: discussion_obj.name,
+    createdAt: new Date(),
+    img_url: discussion_obj.img_url,
+    body: discussion_obj.body,
+    comments: discussion_obj.comments
+  });
 }
 
+
 Meteor.startup(() => {
-  // If the Links collection is empty, add some data.
-  if (LinksCollection.find().count() === 0) {
-    insertLink({
-      title: 'Do the Tutorial',
-      url: 'https://www.meteor.com/tutorials/react/creating-an-app'
-    });
+  if (DiscussionCollection.find().count() === 0) {
+    // creating a new discussion for testing
+    const discussion_obj = {
+      username: 'mayaba',
+      name: 'Rahim Mayaba',
+      img_url: 'images/timeline-1.png',
+      body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed urna in justo euismod condimentum. Fusce placerat enim et odio molestie sagittis.',
+      comments: [
+        {
+          username: 'hemoo91',
+          name: 'Jon Doe',
+          createdAt: new Date(),
+          body: 'we are doing dance and singing songs, please vote our post which is very good for all young peoples'
+        }
+      ]
+    };
 
-    insertLink({
-      title: 'Follow the Guide',
-      url: 'http://guide.meteor.com'
-    });
-
-    insertLink({
-      title: 'Read the Docs',
-      url: 'https://docs.meteor.com'
-    });
-
-    insertLink({
-      title: 'Discussions',
-      url: 'https://forums.meteor.com'
-    });
+    insertLink(discussion_obj);
   }
 });
