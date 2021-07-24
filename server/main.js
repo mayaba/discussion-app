@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { DiscussionCollection } from "/imports/api/discussion";
-import { UsersCollection } from "/imports/api/appUsers";
+import { DiscussionCollection } from "/imports/db/discussion";
+import { UsersCollection } from "/imports/db/appUsers";
 import '/imports/api/discussionMethods';
 
 

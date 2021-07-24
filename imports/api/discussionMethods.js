@@ -1,5 +1,5 @@
 import { check } from 'meteor/check';
-import { DiscussionCollection } from "./discussion";
+import { DiscussionCollection } from "../db/discussion";
 
 Meteor.methods({
 

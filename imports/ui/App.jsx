@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { DiscussionForm } from "./components/DiscussionForm";
 import { useTracker } from 'meteor/react-meteor-data';
-import { DiscussionCollection } from "/imports/api/discussion";
-import { UsersCollection } from "/imports/api/appUsers";
+import { DiscussionCollection } from "/imports/db/discussion";
+import { UsersCollection } from "/imports/db/appUsers";
 import { LoginForm } from "./components/LoginForm";
 import { RegisterForm } from "./components/RegisterForm";
 import { Row, Col, Card, CardBody, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
@@ -14,6 +14,7 @@ export const App = () => {
   const [verticleTab, setVerticleTab] = useState('');
   const [register, setRegister] = useState(false);
   const discussions = [];
+  // TODO: get rid of titles
   const titles = [];
 
   useTracker(() => DiscussionCollection.find({}).forEach(d => {

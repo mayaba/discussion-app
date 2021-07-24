@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mongo } from 'meteor/mongo';
-import { DiscussionCollection } from "/imports/api/discussion";
+import { DiscussionCollection } from "/imports/db/discussion";
 import { Row, Col, Card, CardBody, Button, Media, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
 
@@ -25,7 +25,7 @@ export const DiscussionForm = ({ discussion, user }) => {
             body: reply.trim()
         };
 
-        // insert a comment (update the discussion)
+        // TODO: use methods instead
         DiscussionCollection.update(
             { _id: discussion._id },
             { $push: { comments: newcomment } }
