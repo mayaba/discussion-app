@@ -1,5 +1,5 @@
 import { check } from 'meteor/check';
-import { DiscussionCollection } from "../db/discussion";
+import { DiscussionCollection } from "./discussion";
 
 Meteor.methods({
 
@@ -7,7 +7,7 @@ Meteor.methods({
         check(id, String);
         check(newcomment, Object);
 
-        if(!newcomment.username) {
+        if (!newcomment.username) {
             throw new Meteor.Error('Not authorized.');
         }
 
@@ -15,6 +15,15 @@ Meteor.methods({
             { _id: id },
             { $push: { comments: newcomment } }
         );
+    },
+
+    'createuser'(username, password) {
+        check(username, String);
+        check(password, String);
+
+        Accounts.createUser({
+            username, password,
+        });
     }
 
 });

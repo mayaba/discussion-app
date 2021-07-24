@@ -1,14 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 
-export const RegisterForm = () => {
+export const RegisterForm = ({onClickSubmit}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const submit = e => {
     e.preventDefault();
 
+    Meteor.call('createuser', username, password);
     Meteor.loginWithPassword(username, password);
+    onClickSubmit();
   };
 
   return (

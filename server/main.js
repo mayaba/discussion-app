@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { DiscussionCollection } from "/imports/api/discussion";
 import { UsersCollection } from "/imports/api/appUsers";
+import '/imports/api/discussionMethods';
 
 
 function insertDiscussion(discussion_obj) {

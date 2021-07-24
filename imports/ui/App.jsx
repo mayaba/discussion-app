@@ -19,6 +19,7 @@ export const App = () => {
   useTracker(() => DiscussionCollection.find({}).forEach(d => {
     if (authUser) {
       // get the user from userscollection
+      console.log(authUser)
       userInfo = UsersCollection.findOne({ username: authUser.username });
       discussions.push(<DiscussionForm key={d._id} discussion={d} user={userInfo} />);
       titles.push(d.title);
@@ -56,7 +57,7 @@ export const App = () => {
             )}
           </>
         ) : (
-          register ? <RegisterForm /> : <LoginForm onRegisterSubmit={() => setRegister(true)}/>
+          register ? <RegisterForm onClickSubmit={() => setRegister(false)} /> : <LoginForm onRegisterSubmit={() => setRegister(true)}/>
         )
       }
     </>
