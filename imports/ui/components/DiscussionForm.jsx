@@ -37,8 +37,7 @@ export const DiscussionForm = ({ discussion, user }) => {
     };
 
     return (
-        <Row>
-            <Col xl="6 xl-60 box-col-8" lg="12" md="7">
+        <>
                 <Row>
                     <Col sm="12">
                         <Card>
@@ -76,7 +75,7 @@ export const DiscussionForm = ({ discussion, user }) => {
                                         <div className="comments-box">
                                             <form onSubmit={handleSubmit}>
                                                 <Media>
-                                                    <Media className="img-w60 img-fluid m-r-15 rounded-circle"  src={`https://robohash.org/${user.username}`} alt="" />
+                                                    <Media className="img-w60 img-fluid m-r-15 rounded-circle" src={`https://robohash.org/${user.username}`} alt="" />
                                                     <Media body>
                                                         <InputGroup className="text-box">
                                                             <Input className="form-control input-txt-bx mt-1" type="text" name="message-to-send" placeholder="Post Your comment" value={reply} onChange={(e) => setReply(e.target.value)} />
@@ -95,7 +94,7 @@ export const DiscussionForm = ({ discussion, user }) => {
                         </Card>
                     </Col>
                 </Row>
-            </Col >
-        </Row>
+
+        </>
     );
 };
