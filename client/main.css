@@ -16,8 +16,8 @@ body {
 .media .media-body{-webkit-box-flex:1;-ms-flex:1;flex:1}
 .timeline-content p{margin-top:30px;color:#999}
 
-.img-w50 {
-  width: 50px;
+.img-w60 {
+  width: 60px;
 }
 
 .timeline-content p{margin-top:30px;color:#999}
@@ -34,4 +34,47 @@ body {
 
 .ml-5 {
   margin-left: 5px;
+}
+
+
+
+
+
+
+/* Login Form test */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form > div {
+  margin: 8px;
+}
+
+.login-form > div > label {
+  font-weight: bold;
+}
+
+.login-form > div  > input {
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding: 10px 6px;
+  background: transparent;
+  border: 1px solid #aaa;
+  width: 100%;
+  font-size: 1em;
+  margin-right: 16px;
+  margin-top: 4px;
+}
+
+.login-form > div > input:focus {
+  outline: 0;
+}
+
+.login-form > div > button {
+  background-color: #62807e;
 }

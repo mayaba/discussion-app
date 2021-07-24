@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { DiscussionCollection } from "/imports/api/discussion";
+import { UsersCollection } from "/imports/api/appUsers";
 
 
 function insertLink(discussion_obj) {
@@ -14,8 +15,28 @@ function insertLink(discussion_obj) {
   });
 }
 
+function insertUser(username) {
+  UsersCollection.insert({
+    username,
+    name: 'Meteor JS',
+    email: 'meteor@example.com'
+  });
+}
 
-Meteor.startup(() => { 
+const SEED_USERNAME = 'meteorite';
+const SEED_PASSWORD = 'password';
+
+Meteor.startup(() => {
+
+  if (!Accounts.findUserByUsername(SEED_USERNAME)) {
+    Accounts.createUser({
+      username: SEED_USERNAME,
+      password: SEED_PASSWORD,
+    });
+    insertUser(SEED_USERNAME);
+  }
+  const user = Accounts.findUserByUsername(SEED_USERNAME);
+
   if (DiscussionCollection.find().count() === 0) {
     // creating a new discussion for testing
     const discussion_obj = {

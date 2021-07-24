@@ -4,11 +4,13 @@ import { DiscussionCollection } from "/imports/api/discussion";
 import { Row, Col, Card, CardBody, Button, Media, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
 
-export const DiscussionForm = ({ discussion }) => {
+export const DiscussionForm = ({ discussion, user }) => {
     const [reply, setReply] = useState("");
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const createdDate = discussion.createdAt;
 
+
+    console.log(user);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -17,8 +19,8 @@ export const DiscussionForm = ({ discussion }) => {
 
         const newcomment = {
             id: new Mongo.ObjectID(),
-            username: discussion.username,
-            name: discussion.name,
+            username: user.username,
+            name: user.name,
             createdAt: new Date(),
             body: reply.trim()
         };
@@ -43,12 +45,11 @@ export const DiscussionForm = ({ discussion }) => {
                             <CardBody>
                                 <div className="new-users-social">
                                     <Media>
-                                        <Media left className="rounded-circle m-r-15 img-w50" src="images/1.jpg" alt="" />
+                                        <Media left className="rounded-circle m-r-15 img-w60" src={`https://robohash.org/${discussion._id}`} alt="" />
                                         <Media body className="">
                                             <h6 className="mb-0 f-w-700">{discussion.name}</h6>
                                             <p>{discussion.username} {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</p>
                                         </Media>
-                                        {/* <span className="pull-right mt-0"><MoreVertical /></span> */}
                                     </Media>
                                 </div>
                                 <Media className="img-fluid" alt="" src={discussion.img_url} />
@@ -61,7 +62,7 @@ export const DiscussionForm = ({ discussion }) => {
                                                 return (
                                                     <div key={comment.id} className="pb-3">
                                                         <Media>
-                                                            <Media className="img-fluid m-r-15 rounded-circle img-w50" alt="" src="images/1.jpg" />
+                                                            <Media className="img-fluid m-r-15 rounded-circle img-w60" alt="" src={`https://robohash.org/${comment.username}`} />
                                                             <Media body><span className="f-w-600">{comment.name} <span>"{comment.username}" {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</span></span>
                                                                 <p>{comment.body}</p>
                                                             </Media>
@@ -75,7 +76,7 @@ export const DiscussionForm = ({ discussion }) => {
                                         <div className="comments-box">
                                             <form onSubmit={handleSubmit}>
                                                 <Media>
-                                                    <Media className="img-w50 img-fluid m-r-15 rounded-circle" alt="" src="images/1.jpg" />
+                                                    <Media className="img-w60 img-fluid m-r-15 rounded-circle"  src={`https://robohash.org/${user.username}`} alt="" />
                                                     <Media body>
                                                         <InputGroup className="text-box">
                                                             <Input className="form-control input-txt-bx mt-1" type="text" name="message-to-send" placeholder="Post Your comment" value={reply} onChange={(e) => setReply(e.target.value)} />
