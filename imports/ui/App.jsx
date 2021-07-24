@@ -4,6 +4,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { DiscussionCollection } from "/imports/api/discussion";
 import { UsersCollection } from "/imports/api/appUsers";
 import { LoginForm } from "./components/LoginForm";
+import { RegisterForm } from "./components/RegisterForm";
 import { Row, Col, Card, CardBody, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 export const App = () => {
   const authUser = useTracker(() => Meteor.user());
   const [verticleTab, setVerticleTab] = useState('');
+  const [register, setRegister] = useState(false);
   const discussions = [];
   const titles = [];
 
@@ -54,7 +56,7 @@ export const App = () => {
             )}
           </>
         ) : (
-          <LoginForm />
+          register ? <RegisterForm /> : <LoginForm onRegisterSubmit={() => setRegister(true)}/>
         )
       }
     </>

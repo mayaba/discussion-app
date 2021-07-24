@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 
-export const LoginForm = () => {
+export const LoginForm = ({ onRegisterSubmit }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,28 +12,32 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={submit} className="login-form">
-      <label htmlFor="username">Username</label>
+    <>
+      <form onSubmit={submit} className="login-form">
+        <h1>Login Form</h1>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          required
+          onChange={e => setUsername(e.target.value)}
+        />
 
-      <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        required
-        onChange={e => setUsername(e.target.value)}
-      />
+        <label htmlFor="password">Password</label>
 
-      <label htmlFor="password">Password</label>
-
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        required
-        onChange={e => setPassword(e.target.value)}
-      />
-
-      <button type="submit">Log In</button>
-    </form>
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          required
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button type="submit">Log In</button>
+      </form>
+      <div>
+        <button onClick={onRegisterSubmit}></button>
+      </div>
+    </>
   );
 };
