@@ -4,7 +4,7 @@ import { DiscussionCollection } from "/imports/api/discussion";
 import { UsersCollection } from "/imports/api/appUsers";
 
 
-function insertLink(discussion_obj) {
+function insertDiscussion(discussion_obj) {
   DiscussionCollection.insert({
     username: discussion_obj.username,
     name: discussion_obj.name,
@@ -55,6 +55,6 @@ Meteor.startup(() => {
       ]
     };
 
-    insertLink(discussion_obj);
+    insertDiscussion(discussion_obj);
   }
 });

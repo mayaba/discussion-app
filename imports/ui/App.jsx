@@ -12,12 +12,14 @@ export const App = () => {
   const authUser = useTracker(() => Meteor.user());
   const [verticleTab, setVerticleTab] = useState('');
   const discussions = [];
+  const titles = [];
 
   useTracker(() => DiscussionCollection.find({}).forEach(d => {
     if (authUser) {
       // get the user from userscollection
       userInfo = UsersCollection.findOne({ username: authUser.username });
       discussions.push(<DiscussionForm key={d._id} discussion={d} user={userInfo} />);
+      titles.push(d.title);
     }
   }));
 
@@ -32,10 +34,10 @@ export const App = () => {
                   <Col sm="3" xs="12">
                     <Nav className="nav flex-column nav-pills">
                       {
-                        discussions.map((d, i) => {
+                        titles.map((t, i) => {
                           return (
-                            <NavItem>
-                              <NavLink href="#" className={verticleTab === i ? 'active' : ''} onClick={() => setVerticleTab(i)}>Discussion 1</NavLink>
+                            <NavItem key={i}>
+                              <NavLink href="#" className={verticleTab === i ? 'active' : ''} onClick={() => setVerticleTab(i)}>{t}</NavLink>
                             </NavItem>
                           );
                         })
