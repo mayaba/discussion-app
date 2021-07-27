@@ -3,27 +3,29 @@ import { DiscussionForm } from "./components/DiscussionForm";
 import { useTracker } from 'meteor/react-meteor-data';
 import { DiscussionCollection } from "/imports/db/discussion";
 import { UsersCollection } from "/imports/db/appUsers";
-import { LoginForm } from "./components/LoginForm";
 import { RegisterForm } from "./components/RegisterForm";
-import { Row, Col, Card, CardBody, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
+import Popup from "./components/Popup";
+import LoginForm from "./components/Login";
+import { Row, Col, Nav, NavItem, NavLink, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
 export const App = () => {
   const authUser = useTracker(() => Meteor.user());
-  const [verticleTab, setVerticleTab] = useState('');
+  const [verticleTab, setVerticleTab] = useState(1);
   const [register, setRegister] = useState(false);
-  const discussions = [];
-  // TODO: get rid of titles
-  const titles = [];
+  const [addDiscussion, setAddDiscussion] = useState(false);
+  const discussions = [{}];
 
   useTracker(() => DiscussionCollection.find({}).forEach(d => {
     if (authUser) {
       // get the user from userscollection
       console.log(authUser)
       userInfo = UsersCollection.findOne({ username: authUser.username });
-      discussions.push(<DiscussionForm key={d._id} discussion={d} user={userInfo} />);
-      titles.push(d.title);
+      discussions.push({
+        title: d.title,
+        discusObj: <DiscussionForm key={d._id} discussion={d} user={userInfo} />
+      });
     }
   }));
 
@@ -38,18 +40,25 @@ export const App = () => {
                   <Col sm="3" xs="12">
                     <Nav className="nav flex-column nav-pills">
                       {
-                        titles.map((t, i) => {
+                        discussions.map((d, i) => {
                           return (
                             <NavItem key={i}>
-                              <NavLink href="#" className={verticleTab === i ? 'active' : ''} onClick={() => setVerticleTab(i)}>{t}</NavLink>
+                              <NavLink href="#" className={verticleTab === i ? 'active' : ''} onClick={() => setVerticleTab(i)}>{d.title}</NavLink>
                             </NavItem>
                           );
                         })
                       }
                     </Nav>
+                    <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
                   </Col>
                   <Col sm="9" xs="12">
-                    {discussions[verticleTab]}
+                    {
+                      addDiscussion ?
+                        <h1>Add Discussion</h1>
+                        :
+                        discussions[verticleTab].discusObj}
+                    {/* <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Popups</Button> */}
+                    <Popup ><p>this is a popup</p></Popup>
                   </Col>
                 </Row>
               </div>
@@ -58,7 +67,7 @@ export const App = () => {
             )}
           </>
         ) : (
-          register ? <RegisterForm onClickSubmit={() => setRegister(false)} /> : <LoginForm onRegisterSubmit={() => setRegister(true)}/>
+          register ? <RegisterForm onClickSubmit={() => setRegister(false)} /> : <LoginForm onRegisterSubmit={() => setRegister(true)} />
         )
       }
     </>

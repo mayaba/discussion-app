@@ -3,6 +3,9 @@ body {
   font-family: sans-serif;
 }
 
+/* for test
+.bg-login {background-color: coral;} */
+
 .m-r-15{
   margin-right:15px;
 }
@@ -89,3 +92,12 @@ body {
 .f-r {
   margin-right: 0%;
 }
+
+.login-card{min-height:100vh;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin:0 auto;background:url("../images/login/login_bg.jpg");background-position:center;padding:30px 12px}
+.login-card .logo{display:block;margin-bottom:30px;text-align:center}
+.login-card .login-main .theme-form label{font-size:15px;letter-spacing:0.4px}
+.theme-form .or:before{content:"";position:absolute;width:65%;height:2px;background-color:#f3f3ff;top:9px;z-index:0;right:0}.login-card .login-main .theme-form input{background-color:#f3f3ff;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.login-card .login-main .theme-form input::-webkit-input-placeholder{color:#999}.login-card .login-main .theme-form input:hover,.login-card .login-main .theme-form input:focus{border:1px solid #b9c1cc;-webkit-box-shadow:none !important;box-shadow:none !important;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.login-card .login-main .theme-form p{margin-bottom:25px;font-size:14px;color:#898989}.login-card .login-main .theme-form .form-group{margin-bottom:10px;position:relative}.login-card .login-main .theme-form .link{position:absolute;top:10px;right:0}
+.col-form-label{margin-left:5px;margin-right:0}
+.show-hide{position:absolute;top:52px;right:20px;-webkit-transform:translateY(-50%);transform:translateY(-50%)}
+.login-card{min-height:100vh;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin:0 auto;background:url("../images/login/login_bg.jpg");background-position:center;padding:30px 12px}
+.login-main{width:450px;padding:40px;border-radius:10px;-webkit-box-shadow:0 0 37px rgba(8,21,66,0.05);box-shadow:0 0 37px rgba(8,21,66,0.05);margin:0 auto;background-color:#fff}
