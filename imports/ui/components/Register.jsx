@@ -75,7 +75,7 @@ const Register = ({ onClickSubmit }) => {
                                             <div className="form-group mb-0 text-center">
                                                 <Button color="primary" className="btn-block" type="submit">Register</Button>
                                             </div>
-                                            <p className="mt-4 mb-0 text-center">Don't have account?  <span role="button" className="ml-2 text-primary" onClick={onClickSubmit}> Sign In</span></p>
+                                            <p className="mt-4 mb-0 text-center">Already have account?  <span role="button" className="ml-2 text-primary" onClick={onClickSubmit}> Sign In</span></p>
                                         </Form>
                                     </TabPane>
                                 </TabContent>
