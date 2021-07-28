@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { DiscussionCollection } from "/imports/db/discussion";
-import { UsersCollection } from "/imports/db/appUsers";
 import '/imports/api/discussionMethods';
 
 
@@ -16,27 +15,32 @@ function insertDiscussion(discussion_obj) {
   });
 }
 
-function insertUser(username) {
-  UsersCollection.insert({
-    username,
-    name: 'Meteor JS',
-    email: 'meteor@example.com'
-  });
-}
+// function insertUser(username) {
+//   UsersCollection.insert({
+//     username,
+//     name: 'Meteor JS',
+//     email: 'meteor@example.com'
+//   });
+// }
 
-const SEED_USERNAME = 'meteorite';
+// const SEED_USERNAME = 'meteorite';
+const SEEDEMAIL = 'meteorite@example.com';
 const SEED_PASSWORD = 'password';
+const SEEDNAME = 'meteorite';
 
 Meteor.startup(() => {
 
-  if (!Accounts.findUserByUsername(SEED_USERNAME)) {
+  if (!Accounts.findUserByEmail(SEEDEMAIL)) {
     Accounts.createUser({
-      username: SEED_USERNAME,
+      email: SEEDEMAIL,
       password: SEED_PASSWORD,
+      profile: {
+        name: SEEDNAME
+      }
     });
-    insertUser(SEED_USERNAME);
   }
-  const user = Accounts.findUserByUsername(SEED_USERNAME);
+  const user = Accounts.findUserByEmail(SEEDEMAIL);
+
 
   if (DiscussionCollection.find().count() === 0) {
     // creating a new discussion for testing

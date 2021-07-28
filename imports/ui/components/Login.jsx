@@ -4,14 +4,14 @@ import { Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, Na
 
 const LoginForm = ({ onRegisterSubmit }) => {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
 
     const submit = e => {
         e.preventDefault();
-    
-        Meteor.loginWithPassword(username, password);
-      };
+
+        Meteor.loginWithPassword(email, password);
+    };
 
     return (
         <Container fluid={true} className="p-0 bg-login">
@@ -19,21 +19,20 @@ const LoginForm = ({ onRegisterSubmit }) => {
                 <Col xs="12" className="p-0">
                     <div className="login-card">
                         <div>
-                            <div>
-                                <a className="logo" href="#javascript">
-                                    <img className="img-fluid for-light" src="images/login.png" alt="" />
-                                </a>
-                            </div>
                             <div className="login-main login-tab">
+                                <a className="logo" href="#javascript">
+                                    <img className="img-fluid" src="images/login.png" alt="" width="250" height="34" />
+                                </a>
                                 <TabContent activeTab="login" className="content-login">
                                     <TabPane className="fade show" tabId="login">
-                                        {/* TODO: Add on submit */}
                                         <Form className="theme-form" onSubmit={submit}>
+                                            <div className="text-center">
                                             <h4>Sign in to account</h4>
                                             <p>Enter your email & password to login</p>
+                                            </div>
                                             <FormGroup>
-                                                <Label className="col-form-label">Username</Label>
-                                                <Input className="form-control" type="text" required="" placeholder="Username" required onChange={e => setUsername(e.target.value)}/>
+                                                <Label className="col-form-label">Email Address</Label>
+                                                <Input className="form-control" type="email" required="" placeholder="Test@gmail.com" required onChange={e => setEmail(e.target.value)} />
                                             </FormGroup>
                                             <FormGroup>
                                                 <Label className="col-form-label">Password</Label>

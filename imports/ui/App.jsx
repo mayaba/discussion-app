@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { DiscussionForm } from "./components/DiscussionForm";
 import { useTracker } from 'meteor/react-meteor-data';
 import { DiscussionCollection } from "/imports/db/discussion";
-import { UsersCollection } from "/imports/db/appUsers";
 import RegisterForm from "./components/Register";
-import Popup from "./components/Popup";
+import AddDiscus from "./components/AddDiscus";
 import LoginForm from "./components/Login";
 import { Row, Col, Nav, NavItem, NavLink, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -19,12 +18,10 @@ export const App = () => {
 
   useTracker(() => DiscussionCollection.find({}).forEach(d => {
     if (authUser) {
-      // get the user from userscollection
       console.log(authUser)
-      userInfo = UsersCollection.findOne({ username: authUser.username });
       discussions.push({
         title: d.title,
-        discusObj: <DiscussionForm key={d._id} discussion={d} user={userInfo} />
+        discusObj: <DiscussionForm key={d._id} discussion={d} user={authUser} />
       });
     }
   }));
@@ -48,9 +45,6 @@ export const App = () => {
                           );
                         })
                       }
-                      {/* <div className="align-self-end">
-                        <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
-                      </div> */}
                     </Nav>
                     <div className="text-center mt-2">
                       <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
@@ -59,10 +53,7 @@ export const App = () => {
                   <Col sm="9" xs="12">
                     {
                       addDiscussion ?
-                        <>
-                          <h1>Add Discussion</h1>
-                          <Popup closeClicked={() => setAddDiscussion(false)}><p>this is a popup</p></Popup>
-                        </>
+                        <AddDiscus user={authUser} cancelClicked={() => setAddDiscussion(false)} />
                         :
                         discussions[verticleTab].discusObj}
                   </Col>

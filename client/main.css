@@ -85,19 +85,51 @@ body {
   background-color: #62807e;
 }
 
+.add-discus{
+  max-width: 600px;
+  margin: auto auto;
+}
+
+.add-discus p {
+       text-align: center;
+       font-weight: 600;
+}
+
+.add-discus ,.input-txt ,textarea {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  resize: vertical;
+}
+
+.add-discus textarea {
+  height: 200px;
+}
+
+.add-discus  input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-discus  input[type=submit]:hover {
+  background-color: #45a049;
+}
 
 
-
-
-
-
-/* ============================== */
 .f-r {
   margin-right: 0%;
 }
 
 .login-card{min-height:100vh;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin:0 auto;background:url("../images/login/login_bg.jpg");background-position:center;padding:30px 12px}
-.login-card .logo{display:block;margin-bottom:30px;text-align:center}
+.logo{display:block;margin-bottom:30px;text-align:center}
 .login-card .login-main .theme-form label{font-size:15px;letter-spacing:0.4px}
 .theme-form .or:before{content:"";position:absolute;width:65%;height:2px;background-color:#f3f3ff;top:9px;z-index:0;right:0}.login-card .login-main .theme-form input{background-color:#f3f3ff;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.login-card .login-main .theme-form input::-webkit-input-placeholder{color:#999}.login-card .login-main .theme-form input:hover,.login-card .login-main .theme-form input:focus{border:1px solid #b9c1cc;-webkit-box-shadow:none !important;box-shadow:none !important;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.login-card .login-main .theme-form p{margin-bottom:25px;font-size:14px;color:#898989}.login-card .login-main .theme-form .form-group{margin-bottom:10px;position:relative}.login-card .login-main .theme-form .link{position:absolute;top:10px;right:0}
 .col-form-label{margin-left:5px;margin-right:0}
