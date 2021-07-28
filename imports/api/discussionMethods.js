@@ -20,11 +20,12 @@ Meteor.methods({
     },
 
     'createuser'(email, password, name) {
-        check(username, String);
+        check(email, String);
         check(password, String);
         check(name, String);
 
         if (!Accounts.findUserByEmail(email)) {
+          try {
             Accounts.createUser({
               email,
               password,
@@ -32,6 +33,10 @@ Meteor.methods({
                 name
               }
             });
+          } catch (error) {
+            throw new Meteor.Error(error.message);
+          }
+            
           }
     }
 

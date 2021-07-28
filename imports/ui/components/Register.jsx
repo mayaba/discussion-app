@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap'
+import { Alert, Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap'
 
 const Register = ({ onClickSubmit }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
+    const [alert, setAlert] = useState(false);
+    const [errmsg, setErrmsg] = useState('');
 
     const submit = e => {
         e.preventDefault();
 
-        Meteor.call('createuser', email, password, name);
-        Meteor.loginWithPassword(email, password);
+        if (!name || !email || !password) {
+            setErrmsg("Problem in registering. Please make sure that the name, email, and password are not empty");
+            setAlert(true);
+            return;
+        }
+
+        try {
+            Meteor.call('createuser', email, password, name);
+        } catch (error) {
+            setErrmsg("Problem in registering. Please make sure that the name, email, and password are not empty" + error.message);
+            setAlert(true);
+            return;
+        }
+
+
+        Meteor.loginWithPassword(email, password, (err) => {
+            setErrmsg("Email or Password is incorrect");
+            setAlert(true);
+        });
         onClickSubmit();
-        
+
     };
 
     return (
@@ -31,7 +50,15 @@ const Register = ({ onClickSubmit }) => {
                                         <Form className="theme-form" onSubmit={submit}>
                                             <div className="text-center">
                                                 <h4>Creare An Account</h4>
-                                                <p>Enter your email & password to login</p>
+                                                <p>Enter your name, email & password to Register</p>
+                                                {
+                                                    alert ?
+                                                        <Alert color="danger">
+                                                            {errmsg}
+                                                        </Alert>
+                                                        :
+                                                        ""
+                                                }
                                             </div>
                                             <FormGroup>
                                                 <Label className="col-form-label">Name</Label>
@@ -46,7 +73,7 @@ const Register = ({ onClickSubmit }) => {
                                                 <Input className="form-control" type="password" name="login[password]" value={password} onChange={e => setPassword(e.target.value)} required="" placeholder="*********" />
                                             </FormGroup>
                                             <div className="form-group mb-0 text-center">
-                                                <Button color="primary" className="btn-block" type="submit">Sign In</Button>
+                                                <Button color="primary" className="btn-block" type="submit">Register</Button>
                                             </div>
                                             <p className="mt-4 mb-0 text-center">Don't have account?  <span role="button" className="ml-2 text-primary" onClick={onClickSubmit}> Sign In</span></p>
                                         </Form>

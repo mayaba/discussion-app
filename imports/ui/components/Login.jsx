@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap'
+import { Alert, Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap'
 
 const LoginForm = ({ onRegisterSubmit }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
+    const [alert, setAlert] = useState(false);
+    const [errmsg, setErrmsg] = useState('');
 
     const submit = e => {
         e.preventDefault();
 
-        Meteor.loginWithPassword(email, password);
+        
+            Meteor.loginWithPassword(email, password, (err) => {
+                setErrmsg("Email or Password is incorrect");
+                setAlert(true);
+            });
+        
     };
 
     return (
@@ -20,6 +27,8 @@ const LoginForm = ({ onRegisterSubmit }) => {
                     <div className="login-card">
                         <div>
                             <div className="login-main login-tab">
+
+
                                 <a className="logo" href="#javascript">
                                     <img className="img-fluid" src="images/login.png" alt="" width="250" height="34" />
                                 </a>
@@ -27,9 +36,17 @@ const LoginForm = ({ onRegisterSubmit }) => {
                                     <TabPane className="fade show" tabId="login">
                                         <Form className="theme-form" onSubmit={submit}>
                                             <div className="text-center">
-                                            <h4>Sign in to account</h4>
-                                            <p>Enter your email & password to login</p>
+                                                <h4>Sign in to account</h4>
+                                                <p>Enter your email & password to login</p>
                                             </div>
+                                            {
+                                                alert ?
+                                                    <Alert color="danger">
+                                                        {errmsg}
+                                                    </Alert>
+                                                    :
+                                                    ""
+                                            }
                                             <FormGroup>
                                                 <Label className="col-form-label">Email Address</Label>
                                                 <Input className="form-control" type="email" required="" placeholder="Test@gmail.com" required onChange={e => setEmail(e.target.value)} />
