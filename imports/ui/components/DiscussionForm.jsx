@@ -51,7 +51,7 @@ export const DiscussionForm = ({ discussion, user }) => {
                                         </Media>
                                     </Media>
                                 </div>
-                                <Media className="img-fluid" alt="" src={discussion.img_url} />
+                                <Media className="img-fluid mx-auto" alt="" src={discussion.img_url} />
                                 <div className="timeline-content">
                                     <p>{discussion.body}</p>
                                     <div className="social-chat">

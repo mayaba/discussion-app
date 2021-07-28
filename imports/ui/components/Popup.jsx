@@ -4,7 +4,7 @@ function Popup(props) {
     return (
         <div>
             <div>
-                <button>close</button>
+                <button onClick={props.closeClicked}>close</button>
                 {props.children}
             </div>
         </div>

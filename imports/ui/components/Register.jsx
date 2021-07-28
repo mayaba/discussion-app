@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap'
 
-const LoginForm = ({ onRegisterSubmit }) => {
+const Register = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState("");
@@ -10,7 +10,9 @@ const LoginForm = ({ onRegisterSubmit }) => {
     const submit = e => {
         e.preventDefault();
     
+        Meteor.call('createuser', username, password);
         Meteor.loginWithPassword(username, password);
+        onClickSubmit();
       };
 
     return (
@@ -29,7 +31,7 @@ const LoginForm = ({ onRegisterSubmit }) => {
                                     <TabPane className="fade show" tabId="login">
                                         {/* TODO: Add on submit */}
                                         <Form className="theme-form" onSubmit={submit}>
-                                            <h4>Sign in to account</h4>
+                                            <h4>Creare an Account</h4>
                                             <p>Enter your email & password to login</p>
                                             <FormGroup>
                                                 <Label className="col-form-label">Username</Label>
@@ -42,7 +44,7 @@ const LoginForm = ({ onRegisterSubmit }) => {
                                             <div className="form-group mb-0 text-center">
                                                 <Button color="primary" className="btn-block" type="submit">Sign In</Button>
                                             </div>
-                                            <p className="mt-4 mb-0 text-center">Don't have account?  <span role="button" className="ml-2 text-primary" onClick={onRegisterSubmit}>Create Account</span></p>
+                                            {/* <p className="mt-4 mb-0 text-center">Already have account?<a className="ml-2" href="" onClick={onRegisterSubmit}> Sign In</a></p> */}
                                         </Form>
                                     </TabPane>
                                 </TabContent>
@@ -55,4 +57,4 @@ const LoginForm = ({ onRegisterSubmit }) => {
     );
 }
 
-export default LoginForm;
+export default Register;

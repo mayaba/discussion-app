@@ -3,7 +3,7 @@ import { DiscussionForm } from "./components/DiscussionForm";
 import { useTracker } from 'meteor/react-meteor-data';
 import { DiscussionCollection } from "/imports/db/discussion";
 import { UsersCollection } from "/imports/db/appUsers";
-import { RegisterForm } from "./components/RegisterForm";
+import RegisterForm from "./components/Register";
 import Popup from "./components/Popup";
 import LoginForm from "./components/Login";
 import { Row, Col, Nav, NavItem, NavLink, Button } from 'reactstrap';
@@ -48,17 +48,23 @@ export const App = () => {
                           );
                         })
                       }
+                      {/* <div className="align-self-end">
+                        <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
+                      </div> */}
                     </Nav>
-                    <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
+                    <div className="text-center mt-2">
+                      <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
+                    </div>
                   </Col>
                   <Col sm="9" xs="12">
                     {
                       addDiscussion ?
-                        <h1>Add Discussion</h1>
+                        <>
+                          <h1>Add Discussion</h1>
+                          <Popup closeClicked={() => setAddDiscussion(false)}><p>this is a popup</p></Popup>
+                        </>
                         :
                         discussions[verticleTab].discusObj}
-                    {/* <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Popups</Button> */}
-                    <Popup ><p>this is a popup</p></Popup>
                   </Col>
                 </Row>
               </div>
