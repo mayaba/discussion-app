@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { DiscussionCollection } from "/imports/db/discussion";
 import { Row, Col, Card, CardBody, Button, Media, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
 
@@ -8,20 +8,6 @@ export const DiscussionForm = ({ discussion, user }) => {
     const [reply, setReply] = useState("");
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const createdDate = discussion.createdAt;
-
-
-    // const newDiscussion = {
-    //     title,
-    //     author: user.profile.name,
-    //     authoremail: user.emails[0].address,
-    //     createdAt: new Date(),
-    //     body: body,
-    //     Comment: []
-    // };
-
-    // if(imgUrl) {
-    //     newDiscussion.imgUrl = imgUrl;
-    // }
 
     console.log(user);
 
@@ -38,13 +24,7 @@ export const DiscussionForm = ({ discussion, user }) => {
             reply: reply.trim()
         };
 
-        // TODO: use methods instead
-        DiscussionCollection.update(
-            { _id: discussion._id },
-            { $push: { comments: newcomment } }
-        );
-
-
+        Meteor.call('addComment', discussion._id, newcomment)
 
         setReply("");
     };
@@ -68,7 +48,7 @@ export const DiscussionForm = ({ discussion, user }) => {
                                     discussion.imgUrl? 
                                     <Media className="img-fluid mx-auto" alt="" src={discussion.imgUrl} />
                                     :
-                                    <div></div>
+                                    ""
                                 }
                                 <div className="timeline-content">
                                     <p>{discussion.body}</p>

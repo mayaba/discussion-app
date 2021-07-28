@@ -4,26 +4,7 @@ import { DiscussionCollection } from "/imports/db/discussion";
 import '/imports/api/discussionMethods';
 
 
-function insertDiscussion(discussion_obj) {
-  DiscussionCollection.insert({
-    username: discussion_obj.username,
-    name: discussion_obj.name,
-    createdAt: new Date(),
-    img_url: discussion_obj.img_url,
-    body: discussion_obj.body,
-    comments: discussion_obj.comments
-  });
-}
 
-// function insertUser(username) {
-//   UsersCollection.insert({
-//     username,
-//     name: 'Meteor JS',
-//     email: 'meteor@example.com'
-//   });
-// }
-
-// const SEED_USERNAME = 'meteorite';
 const SEEDEMAIL = 'meteorite@example.com';
 const SEED_PASSWORD = 'password';
 const SEEDNAME = 'meteorite';
@@ -43,23 +24,24 @@ Meteor.startup(() => {
 
 
   if (DiscussionCollection.find().count() === 0) {
-    // creating a new discussion for testing
     const discussion_obj = {
-      username: 'mayaba',
-      name: 'Rahim Mayaba',
-      img_url: 'images/timeline-1.png',
-      body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed urna in justo euismod condimentum. Fusce placerat enim et odio molestie sagittis.',
+      title: 'Welcome! We [Robots] are welcoming you',
+      author: 'The Kind Robot',
+      authoremail: SEEDEMAIL,
+      createdAt: new Date(),
+      img_url: `https://i.pinimg.com/originals/b5/ab/32/b5ab323baa04bd9903c0d140a41cc7fa.jpg`,
+      body: 'This is a discussion system for robots, but because we are kind, we are let humans joining us. Please feel free to comment and disciss with us.',
       comments: [
         {
           id: new Mongo.ObjectID(),
-          username: 'hemoo91',
-          name: 'Jon Doe',
+          writer: 'Rahim May',
+          writeremail: 'ammayaba@gmail.com',
           createdAt: new Date(),
-          body: 'we are doing dance and singing songs, please vote our post which is very good for all young peoples'
+          reply: "Cool! I'm the first human to join :)"
         }
       ]
     };
 
-    insertDiscussion(discussion_obj);
+    DiscussionCollection.insert(discussion_obj);
   }
 });

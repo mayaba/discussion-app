@@ -10,22 +10,10 @@ const Register = ({ onClickSubmit }) => {
     const submit = e => {
         e.preventDefault();
 
-
-        Meteor.call('createuser', email, password);
-
-        if (!Accounts.findUserByEmail(email)) {
-            Accounts.createUser({
-              email,
-              password,
-              profile: {
-                name
-              }
-            });
-            console.log(Accounts.findUserByEmail(email))
-          }
-
+        Meteor.call('createuser', email, password, name);
         Meteor.loginWithPassword(email, password);
         onClickSubmit();
+        
     };
 
     return (

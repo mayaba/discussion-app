@@ -3,13 +3,9 @@ import { DiscussionCollection } from "../db/discussion";
 
 Meteor.methods({
 
-    'discussion.update'(id, newcomment) {
+    'addComment'(id, newcomment) {
         check(id, String);
         check(newcomment, Object);
-
-        if (!newcomment.username) {
-            throw new Meteor.Error('Not authorized.');
-        }
 
         DiscussionCollection.update(
             { _id: id },
@@ -17,13 +13,26 @@ Meteor.methods({
         );
     },
 
-    'createuser'(username, password) {
+    'addDiscussion'(newDiscussion){
+        check(newDiscussion, Object)
+
+        DiscussionCollection.insert(newDiscussion);
+    },
+
+    'createuser'(email, password, name) {
         check(username, String);
         check(password, String);
+        check(name, String);
 
-        Accounts.createUser({
-            username, password,
-        });
+        if (!Accounts.findUserByEmail(email)) {
+            Accounts.createUser({
+              email,
+              password,
+              profile: {
+                name
+              }
+            });
+          }
     }
 
 });

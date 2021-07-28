@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, FormGroup, Input, Label, Button, NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap';
-import { DiscussionCollection } from "/imports/db/discussion";
-
+import { Meteor } from 'meteor/meteor';
+import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 function AddDiscus({ cancelClicked, user }) {
     const [title, setTitle] = useState('');
     const [imgUrl, setImgUrl] = useState('');
@@ -10,7 +9,7 @@ function AddDiscus({ cancelClicked, user }) {
 
     const submit = e => {
         e.preventDefault();
-        
+
         const newDiscussion = {
             title,
             author: user.profile.name,
@@ -20,11 +19,11 @@ function AddDiscus({ cancelClicked, user }) {
             comments: []
         };
 
-        if(imgUrl) {
+        if (imgUrl) {
             newDiscussion.imgUrl = imgUrl;
         }
 
-        DiscussionCollection.insert(newDiscussion);
+        Meteor.call('addDiscussion', newDiscussion)
     };
 
     return (
