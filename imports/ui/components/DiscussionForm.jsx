@@ -9,7 +9,6 @@ export const DiscussionForm = ({ discussion, user }) => {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const createdDate = discussion.createdAt;
 
-    console.log(user);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -40,18 +39,18 @@ export const DiscussionForm = ({ discussion, user }) => {
                                         <Media left className="rounded-circle m-r-15 img-w60" src={`https://robohash.org/${discussion.authoremail}`} alt="Profile Image" />
                                         <Media body className="">
                                             <h6 className="mb-0 f-w-700">{discussion.author}</h6>
-                                            <p>{discussion.authoremail} | {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</p>
+                                            <p>{discussion.authoremail} on {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</p>
                                         </Media>
                                     </Media>
                                 </div>
                                 {
-                                    discussion.imgUrl? 
-                                    <Media className="img-fluid mx-auto" alt="" src={discussion.imgUrl} />
-                                    :
+                                    discussion.img_url === ''?
                                     ""
+                                    : 
+                                    <Media className="img-fluid mx-auto" alt="" src={discussion.img_url} />
                                 }
                                 <div className="timeline-content">
-                                    <p>{discussion.body}</p>
+                                    <p className="text-dark">{discussion.body}</p>
                                     <div className="social-chat">
                                         <div className="other-msg">
                                             {discussion.comments.map(comment => {

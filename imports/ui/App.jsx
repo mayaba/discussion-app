@@ -19,7 +19,6 @@ export const App = () => {
 
   useTracker(() => DiscussionCollection.find({}).forEach(d => {
     if (authUser) {
-      console.log(authUser)
       discussions.push({
         title: d.title,
         discusObj: <DiscussionForm key={d._id} discussion={d} user={authUser} />
@@ -49,15 +48,18 @@ export const App = () => {
                       }
                     </Nav>
                     <div className="text-center mt-2">
-                      <Button outline color="secondary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
+                      <Button outline color="primary" onClick={() => setAddDiscussion(true)}>Add new discussion</Button>
                     </div>
                   </Col>
                   <Col sm="9" xs="12">
                     {
                       addDiscussion ?
                         <AddDiscus user={authUser} cancelClicked={() => setAddDiscussion(false)} />
-                        :
-                        discussions[verticleTab].discusObj}
+                        : (verticleTab ?
+                          discussions[verticleTab].discusObj
+                          :
+                          "")}
+
                   </Col>
                 </Row>
               </div>

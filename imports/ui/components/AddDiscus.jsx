@@ -26,7 +26,7 @@ function AddDiscus({ cancelClicked, user }) {
         };
 
         if (imgUrl) {
-            newDiscussion.imgUrl = imgUrl;
+            newDiscussion.img_url = imgUrl;
         }
 
         Meteor.call('addDiscussion', newDiscussion)

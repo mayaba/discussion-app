@@ -29,8 +29,8 @@ Meteor.startup(() => {
       author: 'The Kind Robot',
       authoremail: SEEDEMAIL,
       createdAt: new Date(),
-      img_url: `https://i.pinimg.com/originals/b5/ab/32/b5ab323baa04bd9903c0d140a41cc7fa.jpg`,
-      body: 'This is a discussion system for robots, but because we are kind, we are let humans joining us. Please feel free to comment and disciss with us.',
+      img_url: 'images/welcome.jpg',
+      body: 'This is a discussion system for robots, but because we are kind, we are letting humans joining us. Please feel free to comment and discuss with us.',
       comments: [
         {
           id: new Mongo.ObjectID(),
