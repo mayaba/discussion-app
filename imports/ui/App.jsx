@@ -6,6 +6,7 @@ import RegisterForm from "./components/Register";
 import AddDiscus from "./components/AddDiscus";
 import LoginForm from "./components/Login";
 import { Row, Col, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import NavBar from "./components/NavBar";
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -31,6 +32,7 @@ export const App = () => {
       {
         authUser ? (
           <>
+            <NavBar />
             {discussions.length > 0 ? (
               <div>
                 <Row>
