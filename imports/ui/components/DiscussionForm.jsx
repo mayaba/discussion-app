@@ -59,7 +59,7 @@ export const DiscussionForm = ({ discussion, user }) => {
                                                     <div key={comment.id} className="pb-3">
                                                         <Media>
                                                             <Media className="img-fluid m-r-15 rounded-circle img-w60" alt="" src={`https://robohash.org/${comment.writeremail}`} />
-                                                            <Media body><span className="f-w-600">{comment.writer} <span>"{comment.writeremail}" {months[createdDate.getMonth()]}, {createdDate.getDate()}, {createdDate.getFullYear()}</span></span>
+                                                            <Media body><span className="f-w-600">{comment.writer} <span>"{comment.writeremail}" {months[createdAt.getMonth()]}, {createdAt.getDate()}, {createdAt.getFullYear()}</span></span>
                                                                 <p>{comment.reply}</p>
                                                             </Media>
                                                         </Media>
