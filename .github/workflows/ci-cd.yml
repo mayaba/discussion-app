@@ -1,0 +1,85 @@
+name: ci-cd
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  security-events: write
+
+env:
+  AWS_REGION: us-east-2
+
+jobs:
+  sca_build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # PR-only: block introducing vulnerable deps (great AppSec signal)
+      - name: Dependency Review
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test --if-present
+
+      - name: SCA (npm audit)
+        run: npm audit --audit-level=high
+
+  build_push_deploy:
+    if: github.event_name != 'pull_request'
+    needs: [sca_build_test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build & push image
+        env:
+          ECR_REPO_URL: ${{ secrets.ECR_REPO_URL }}
+        run: |
+          TAG="sha-${GITHUB_SHA}"
+          docker build -t "${ECR_REPO_URL}:${TAG}" .
+          docker push "${ECR_REPO_URL}:${TAG}"
+
+      - name: Deploy to EC2 via SSM
+        env:
+          ECR_REPO_URL: ${{ secrets.ECR_REPO_URL }}
+          INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
+        run: |
+          TAG="sha-${GITHUB_SHA}"
+          IMAGE_URI="${ECR_REPO_URL}:${TAG}"
+
+          CMD_ID=$(aws ssm send-command \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name "AWS-RunShellScript" \
+            --parameters commands="/usr/local/bin/app-deploy.sh ${IMAGE_URI}" \
+            --query "Command.CommandId" --output text)
+
+          echo "SSM CommandId: $CMD_ID"
+          aws ssm get-command-invocation \
+            --command-id "$CMD_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "{Status:Status,StdOut:StandardOutputContent,StdErr:StandardErrorContent}" \
+            --output json
