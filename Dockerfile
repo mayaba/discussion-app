@@ -1,7 +1,7 @@
 # ----------------------------
 # Build stage (Meteor build)
 # ----------------------------
-FROM node:20-bullseye AS build
+FROM node:25-bullseye AS build
 WORKDIR /src
 
 # Install Meteor
@@ -20,7 +20,7 @@ RUN meteor build --directory /build --server-only --allow-superuser
 # ----------------------------
 # Runtime stage (run bundle)
 # ----------------------------
-FROM node:20-bullseye-slim AS runtime
+FROM node:25-bullseye-slim AS runtime
 WORKDIR /app
 
 # Copy built bundle from build stage
