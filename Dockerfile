@@ -5,6 +5,7 @@ WORKDIR /src
 # Install Meteor
 RUN curl https://install.meteor.com/ | sh
 ENV PATH="/root/.meteor:${PATH}"
+ENV METEOR_ALLOW_SUPERUSER=true
 
 COPY . .
 
