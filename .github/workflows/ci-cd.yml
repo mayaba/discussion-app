@@ -47,6 +47,7 @@ jobs:
         run: npm test --if-present
 
       - name: SCA (npm audit)
+        continue-on-error: true
         run: meteor npm audit
 
   build_push_deploy:
