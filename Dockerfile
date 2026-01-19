@@ -1,18 +1,24 @@
+# syntax=docker/dockerfile:1
+
+ARG NODE_VERSION=14
+
 # ----------------------------
 # Build stage (Meteor build)
 # ----------------------------
-FROM node:20-bullseye AS build
+FROM node:${NODE_VERSION}-bullseye AS build
 WORKDIR /src
 
-# Install Meteor
-RUN curl https://install.meteor.com/ | sh
+ARG METEOR_RELEASE=2.3.2
+
+# Install Meteor tool (pinned)
+RUN curl "https://install.meteor.com/?release=${METEOR_RELEASE}" | sh
 ENV PATH="/root/.meteor:${PATH}"
 ENV METEOR_ALLOW_SUPERUSER=true
 
-# Copy app source
+# Copy source
 COPY . .
 
-# Install deps and build server bundle
+# Install deps + build bundle
 RUN meteor npm install --allow-superuser
 RUN meteor build --directory /build --server-only --allow-superuser
 
@@ -20,20 +26,20 @@ RUN meteor build --directory /build --server-only --allow-superuser
 # ----------------------------
 # Runtime stage (run bundle)
 # ----------------------------
-FROM node:20-bullseye-slim AS runtime
+FROM node:${NODE_VERSION}-bullseye-slim AS runtime
 WORKDIR /app
 
-# Copy built bundle from build stage
+# Copy bundle
 COPY --from=build /build/bundle /app/bundle
 
-# Install server dependencies (may require node-gyp => python/make/g++)
+# Install server deps (native modules like fibers may need build tooling)
 WORKDIR /app/bundle/programs/server
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends python3 make g++ \
+  && apt-get install -y --no-install-recommends python3 make g++ ca-certificates \
   && rm -rf /var/lib/apt/lists/* \
-  && npm install --omit=dev
+  && npm install --omit=dev --unsafe-perm
 
-# Runtime configuration
+# Runtime config
 WORKDIR /app/bundle
 ENV PORT=3000
 EXPOSE 3000
