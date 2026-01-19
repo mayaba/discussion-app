@@ -18,7 +18,7 @@ jobs:
   sca_build_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       # PR-only: block introducing vulnerable deps (great AppSec signal)
       - name: Dependency Review
@@ -55,7 +55,7 @@ jobs:
     needs: [sca_build_test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
