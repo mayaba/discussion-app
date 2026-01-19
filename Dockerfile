@@ -1,9 +1,31 @@
-FROM node:20-alpine
+# --- build stage ---
+FROM node:20-bullseye AS build
+WORKDIR /src
 
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev
+# Install Meteor
+RUN curl https://install.meteor.com/ | sh
+ENV PATH="/root/.meteor:${PATH}"
 
 COPY . .
+
+# Install deps using Meteor's npm
+RUN meteor npm install
+
+# Build server bundle
+RUN meteor build --directory /build --server-only
+
+# --- runtime stage ---
+FROM node:20-alpine
+WORKDIR /app
+
+# Copy built bundle
+COPY --from=build /build/bundle /app/bundle
+
+WORKDIR /app/bundle/programs/server
+RUN npm install --omit=dev
+
+WORKDIR /app/bundle
+ENV PORT=3000
 EXPOSE 3000
-CMD ["npm", "start"]
+
+CMD ["node", "main.js"]
