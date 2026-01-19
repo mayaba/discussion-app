@@ -30,8 +30,13 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install
-        run: npm ci
+      - name: Install Meteor
+        run: |
+          curl https://install.meteor.com/ | sh
+          echo "$HOME/.meteor" >> $GITHUB_PATH
+
+      - name: Install dependencies (Meteor-managed)
+        run: meteor npm ci || meteor npm install
 
       - name: Test
         run: npm test --if-present
